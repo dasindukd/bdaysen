@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Happy Birthday Sennybean!</title>
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            background: url('https://www.publicdomainpictures.net/pictures/320000/nahled/white-lilies-flowers.jpg') no-repeat center center/cover;
+            color: white;
+            font-family: Arial, sans-serif;
+            text-align: center;
+            position: relative;
+        }
+        #entry, #message {
+            background: rgba(0, 0, 0, 0.5);
+            padding: 20px;
+            border-radius: 10px;
+            z-index: 2;
+        }
+        .overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.3);
+            z-index: 1;
+        }
+        .fireworks {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 3;
+        }
+    </style>
+</head>
+<body>
+    <div class="overlay"></div>
+    <div id="entry">
+        <h2>Enter Passcode</h2>
+        <input type="password" id="passcode" placeholder="Enter Passcode">
+        <button onclick="checkPasscode()">Submit</button>
+        <p>Hint: IG Password</p>
+    </div>
+    <div id="message" style="display: none;">
+        <h1>Happy Birthday, my Sennybean!!! ❤❤❤🎂✨</h1>
+        <p>From the moment you walked into my life, everything became brighter and a little more chaotic (in the best way possible). You’re the most beautiful and amazing person I know.</p>
+        <p>On your special day, I just want to remind you how much I love you. You make my world happier, my heart fuller, and my life way more fun. I’m so lucky to have you and I really can't believe I pulled such a beautiful girl like you.</p>
+        <p>Wishing you all the best and a life filled with happiness, laughter, and love. I really hope I could meet you soon because I can't stand another day without meeting you 😘. I will always be there to annoy you.</p>
+        <p>Miss you a lot 🥺 I love you so much!</p>
+    </div>
+    <canvas class="fireworks"></canvas>
+    <script>
+        function checkPasscode() {
+            let passcode = document.getElementById("passcode").value;
+            if (passcode === "dasindu200769") {
+                document.getElementById("entry").style.display = "none";
+                document.getElementById("message").style.display = "block";
+                startFireworks();
+            } else {
+                alert("Wrong Passcode! Try again.");
+            }
+        }
+        function startFireworks() {
+            const canvas = document.querySelector(".fireworks");
+            const ctx = canvas.getContext("2d");
+            canvas.width = window.innerWidth;
+            canvas.height = window.innerHeight;
+            let particles = [];
+            function createFirework() {
+                let x = Math.random() * canvas.width;
+                let y = Math.random() * canvas.height;
+                let size = Math.random() * 5 + 2;
+                let color = `hsl(${Math.random() * 360}, 100%, 60%)`;
+                particles.push({ x, y, size, color, alpha: 1 });
+            }
+            function animate() {
+                ctx.clearRect(0, 0, canvas.width, canvas.height);
+                particles.forEach((p, i) => {
+                    ctx.beginPath();
+                    ctx.arc(p.x, p.y, p.size, 0, Math.PI * 2);
+                    ctx.fillStyle = p.color;
+                    ctx.globalAlpha = p.alpha;
+                    ctx.fill();
+                    p.alpha -= 0.02;
+                    if (p.alpha <= 0) particles.splice(i, 1);
+                });
+                createFirework();
+                requestAnimationFrame(animate);
+            }
+            animate();
+        }
+    </script>
+</body>
+</html>
